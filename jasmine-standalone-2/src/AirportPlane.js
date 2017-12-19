@@ -15,8 +15,11 @@ var Plane = function(name) {
   };
 };
 
-var Airport = function() {
-  this.capacity = 20
+var Airport = function(cap) {
+  if (cap === undefined) {
+    cap = 20
+  }
+  this.capacity = cap
   this.planes = []
   // this.isEmpty = (this.planes.length === 0)
   this.landPlane = function(plane) {
@@ -30,6 +33,7 @@ var Airport = function() {
   this.takeoffPlane = function(plane) {
     var ind = this.planes.indexOf(plane);
     if (ind > -1) {
+      plane.fly()
       this.planes.splice(ind, 1);
     } else {
       throw (new Error("Cannot takeoff plane that is not present"))
@@ -39,4 +43,8 @@ var Airport = function() {
 
 Airport.prototype.isEmpty = function() {
   return (this.planes.length === 0)
+}
+
+Airport.prototype.isStormy = function() {
+  return (Math.random() <= 0.25)
 }
